@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SuperShoes Demo</title>
+      <script src="/js/Chart.js"></script>
+       <!-- Our app.js file -->
+      <script src="/js/app.js">
+</script>
+     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    
+<div align="center">
+    <h1>SuperShoes Demo</h1>
+    <p>This will retrieve interactions from all enabled services and count the number related to two different brands and a hash tag for each</p>
+     <form id="create-message" class="well row">
+            <fieldset class="col-lg-8 col-offset-2">
+                <legend>Settings</legend>
+               <input type="text" placeholder="DataSift Username" id="dsun" name="dsun" class="col-lg-12"/>
+               <input type="text" placeholder="DataSift Token" id="dstok" name="dstok" class="col-lg-12"/>
+               <input type="text" placeholder="Brand 1" id="brand1" name="brand1" class="col-lg-12"/>
+               <input type="text" placeholder="Brand 1 Hash Tag (without #)" id="brand1ht" name="brand1ht" class="col-lg-12"/>
+               <input type="text" placeholder="Brand 2" id="brand2" name="brand2" class="col-lg-12"/> 
+               <input type="text" placeholder="Brand 2 Hash Tag (without #)" id="brand2ht" name="brand2ht" class="col-lg-12"/>
+               <input type="text" placeholder="Maximum Interactions to Retrieve" id="message" name="message" class="col-lg-12"/>
+               <!-- <textarea placeholder="Maximum Interactions to Retrieve" id="message" name="message" class="col-lg-12"></textarea> -->
+                <input id="submitbutton" type="submit" value="Start Demo" class="btn btn-default col-lg-12" />
+        </form>
+    
+
+
+
+             <ul class="adidas" style="color:#F7464A">
+                Brand1<!-- Data goes here -->
+            </ul>
+ 
+            <ul class="nike" style="color:#46BFDB">
+                Brand2<!-- Data goes here -->
+            </ul>
+ <div id="canvas-holder" align="center">
+  <canvas id="chart-area" width="400" height="400" align="center"></canvas>
+ 
+ </div>
+
+
+
+    <ul class="tweets" align="left"></ul>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script> 
+    <!-- Our app.js file -->
+        <script type="text/javascript" src="/js/app.js"></script>
+    
+      <script>
+      //added to try to make live updating
+    var canvas = document.getElementById('chart-area'),
+    ctx = canvas.getContext('2d');
+    
+    var pieData = [
+        {
+          value: 1,
+          color:"#F7464A",
+          highlight: "#FF5A5E",
+          label: "Brand 1"
+        },
+        {
+          value: 1,
+          color: "#46BFBD",
+          highlight: "#5AD3D1",
+          label: "Brand 2"
+        }
+      ];
+/*
+      window.onload = function(){
+        var ctx = document.getElementById("chart-area").getContext("2d");
+        window.myPie = new Chart(ctx).Pie(pieData);
+      };
+*/
+
+// Reduce the animation steps for demo clarity.
+var myLivePie = new Chart(ctx).Pie(pieData, {animationSteps: 15});
+
+
+  </script>
+
+
+    <script>
+      var socket = io.connect();
+      jQuery(function ($) {
+        var tweetList = $('ul.tweets'),
+            adidasCounter = $('ul.adidas'),
+            nikeCounter = $('ul.nike');
+        socket.on('tweet', function (data) {
+          tweetList
+            .prepend('<li>' + data.service + ": " + data.user + ' / ' + data.text + '</li>');
+          adidasCounter
+            .text(data.webBrand1 + ': ' + data.adidasTotal + ' interactions (' + data.adidasPercent + '%)');
+          nikeCounter
+            .text(data.webBrand2 + ': ' + data.nikeTotal + ' interactions (' + data.nikePercent + '%)');
+     myLivePie.segments[0].value = data.adidasTotal;
+     myLivePie.segments[0].label = data.webBrand1;
+  myLivePie.segments[1].value = data.nikeTotal;
+  myLivePie.segments[1].label = data.webBrand2;
+  myLivePie.update();
+  document.getElementById("submitbutton").disabled = true; 
+  document.getElementById("submitbutton").value = data.jobStatus; 
+        });
+      });
+
+    </script>
+
+    
+
+  </body>
+</html>

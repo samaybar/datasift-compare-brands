@@ -1,0 +1,12 @@
+{
+    "name": "supershoes"
+  , "version": "0.0.2"
+  , "dependencies": {
+      "socket.io": "~0.9.10",
+      "request": "~2.11.4",
+      "datasift-node": "*",
+      "jquery": "*",
+      "cradle": "*",
+      "express" : "*"
+    }
+}
