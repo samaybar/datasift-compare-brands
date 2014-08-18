@@ -24,8 +24,7 @@
                <input type="text" placeholder="Brand 2" id="brand2" name="brand2" class="col-lg-12"/> 
                <input type="text" placeholder="Brand 2 Hash Tag (without #)" id="brand2ht" name="brand2ht" class="col-lg-12"/>
                <input type="text" placeholder="Maximum Interactions to Retrieve" id="message" name="message" class="col-lg-12"/>
-               <!-- <textarea placeholder="Maximum Interactions to Retrieve" id="message" name="message" class="col-lg-12"></textarea> -->
-                <input id="submitbutton" type="submit" value="Start Demo" class="btn btn-default col-lg-12" />
+               <input id="submitbutton" type="submit" value="Start Demo" class="btn btn-default col-lg-12" />
         </form>
     
 
@@ -71,14 +70,7 @@
           label: "Brand 2"
         }
       ];
-/*
-      window.onload = function(){
-        var ctx = document.getElementById("chart-area").getContext("2d");
-        window.myPie = new Chart(ctx).Pie(pieData);
-      };
-*/
 
-// Reduce the animation steps for demo clarity.
 var myLivePie = new Chart(ctx).Pie(pieData, {animationSteps: 15});
 
 
