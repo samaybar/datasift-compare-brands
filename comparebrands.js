@@ -137,45 +137,6 @@ function connect(hash) {
 					}
 		console.log(brand1 +': ' + adidas + ' | ' + brand2 + ': ' + nike)
 		
-		/*
-		if (locationTemp == "New York"){
-			if (brandTemp == "Adidas"){
-			geoAdidas[0]++;
-			}
-			if (brandTemp == "Nike"){
-			geoNike[0]++;
-			}
-		}
-		else if (locationTemp == "Los Angeles"){
-			if (brandTemp == "Adidas"){
-			geoAdidas[1]++;
-			}
-			if (brandTemp == "Nike"){
-			geoNike[1]++;
-			}
-		}
-		else if (locationTemp == "Chicago"){
-			if (brandTemp == "Adidas"){
-			geoAdidas[2]++;
-			}
-			if (brandTemp == "Nike"){
-			geoNike[2]++;
-			}
-		}
-		else {
-			if (brandTemp == "Adidas"){
-			geoAdidas[3]++;
-			}
-			if (brandTemp == "Nike"){
-			geoNike[3]++;
-			}
-		}
-		*/
-/*
-		console.log("Brand | NY | LA | Chicago | Other");
-		console.log("Adidas | " + geoAdidas[0] + " | " + geoAdidas[1] + " | "+ geoAdidas[2] + " | " + geoAdidas[3]);
-		console.log("Nike | " + geoNike[0] + " | " + geoNike[1] + " | "+ geoNike[2] + " | " + geoNike[3]);
-  */
    		if (count>=max){
 			ds.unsubscribe(hash);
 			console.log('unsubcribed');
@@ -198,51 +159,11 @@ function connect(hash) {
       		webBrand2: brand2
     	});
 
-		/*
-		io.sockets.on('connection', function (socket) {
-		    sockets.push(socket);
-
-		    socket.emit('messages-available', messages);
-
-    		socket.on('add-message', function (data) {
-        		messages.push(data);
-        		sockets.forEach(function (socket) {
-            		socket.emit('message-added', data);
-        			});
-    			});
-			});
-	*/
-/*
-broadcast_info('tweet', {
-      user: adidas,
-      text: nike
-    });
-*/
-
-
-
-		/*
-		if (count==10) {
-			console.log('sending to database');
-			sendData(info);
-			console.log('data sent');
-			// figure out how to stop the program here 
-		}
-		*/
 });	
  
 	// Now all handlers are set up, connect to DataSift!
 		ds.connect();
-/*
-	if (ccount<2){
-		ds.connect();
-		}
-	else{
-		subscribe(hash);
-	}	
-*/
 }
-//if this breaks now take out the section below
 
 
 
@@ -269,23 +190,11 @@ tag.brand "' + brand2 + '" {interaction.content contains_any "' + brand2 + '" OR
 return { \
 (interaction.content contains_any "' + brand1 + ', ' + brand2 + '" OR interaction.hashtags contains_any "' + tag1 + ', ' + tag2 + '") AND language.tag contains "en" \
 }';
-		//see if this will let it run more than once
-		//console.log(data.dsName);
-		//console.log(dataSiftUserName);
 		ds = new DataSift(dataSiftUserName, dataSiftToken);
         console.log('there was a new message. max is now ' + max);
         console.log(max*3)
         compileFilter(filter);
         ccount++;    
-/*
-        if(ccount<2){
-        	compileFilter(filter);
-        	ccount++;
-    	}
-    	else{
-    		subscribe(hash);
-    	}
-  */
         console.log('loop:' + ccount)
    		sockets.forEach(function (socket) {
             socket.emit('message-added', data);
@@ -295,15 +204,12 @@ return { \
 
 
 
-// the code before here could be the bad code
 
 
 
 // Initiate our script by comiling the filter, which in turn will connect us to DataSift
 //compileFilter(filter);
 
-//Connect to SuperShoes Demo 0e33107ca8b48b5101b608f5fc2599cd
-//connect(superShoesHash);
 
 
 //send data to database
@@ -316,13 +222,8 @@ var dbDatabase = config.dbname;
 
 var cradle = require('cradle');
 
-var db = new(cradle.Connection)('https://saybar.iriscouch.com', 6984, {
-	auth: { username: 'dsreceiver', password: 'dsrpassword211ars'}
-}).database('supershoes');
 var db = new(cradle.Connection)(dbURL, dbPort,
  {auth: {username: dbUser, password: dbPassword}}).database(dbDatabase);
-
-// var db = new(cradle.Connection)().database('datasifttest');
 
 function sendRecord(singleItem){
 		db.save(singleItem,
