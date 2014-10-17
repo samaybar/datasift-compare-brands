@@ -27,11 +27,11 @@ var brand2 = 'Nike'
 var tag2 = 'justdoit'
 
 
-var filter = 'tag.brand "' + brand1 + '" {interaction.content contains "' + brand1 + '" OR interaction.hashtags contains "' + tag1 + '"} \
-tag.brand "' + brand2 + '" {interaction.content contains_any "' + brand2 + '" OR interaction.hashtags contains "' + tag2 + '"} \
+var filter = 'tag.brand "' + brand1 + '" {interaction.content contains "' + brand1 + '" OR interaction.hashtags contains "' + tag1 + '" OR interaction.mentions in "' + brand1 +'"} \
+tag.brand "' + brand2 + '" {interaction.content contains_any "' + brand2 + '" OR interaction.hashtags contains "' + tag2 + '" OR interaction.mentions in "' + brand2 +'"} \
 \
 return { \
-(interaction.content contains_any "' + brand1 + ', ' + brand2 + '" OR interaction.hashtags contains_any "' + tag1 + ', ' + tag2 + '") AND language.tag contains "en" \
+(interaction.content contains_any "' + brand1 + ', ' + brand2 + '" OR interaction.hashtags contains_any "' + tag1 + ', ' + tag2 + ' OR interaction.mentions in "' + brand1 + ', ' + brand2 '") AND language.tag contains "en" \
 }';
 var dataSiftUserName = 'sam';//config.dsUser
 var dataSiftToken = config.dsToken;
