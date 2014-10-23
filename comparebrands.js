@@ -31,7 +31,7 @@ var filter = 'tag.brand "' + brand1 + '" {interaction.content contains "' + bran
 tag.brand "' + brand2 + '" {interaction.content contains_any "' + brand2 + '" OR interaction.hashtags contains "' + tag2 + '" OR interaction.mentions in "' + brand2 +'"} \
 \
 return { \
-(interaction.content contains_any "' + brand1 + ', ' + brand2 + '" OR interaction.hashtags contains_any "' + tag1 + ', ' + tag2 + ' OR interaction.mentions in "' + brand1 + ', ' + brand2 '") AND language.tag contains "en" \
+(interaction.content contains_any "' + brand1 + ', ' + brand2 + '" OR interaction.hashtags contains_any "' + tag1 + ', ' + tag2 + '" OR interaction.mentions in "' + brand1 + ', ' + brand2 + '") AND language.tag contains "en" \
 }';
 var dataSiftUserName = 'sam';//config.dsUser
 var dataSiftToken = config.dsToken;
@@ -182,8 +182,14 @@ io.sockets.on('connection', function (socket) {
         brand2 = data.b2;
         tag1 = data.b1ht;
         tag2 = data.b2ht;
-        dataSiftUserName = data.dsName;
-        dataSiftToken = data.dsToken;
+        if(data.dsName==1)
+        	{dataSiftUserName = config.dsUser;}
+    	else
+	        {dataSiftUserName = data.dsName;}
+	    if(data.dsToken==1)
+	    	{dataSiftToken = config.dsToken;}
+	    else	
+        	{dataSiftToken = data.dsToken;}
         filter = 'tag.brand "' + brand1 + '" {interaction.content contains "' + brand1 + '" OR interaction.hashtags contains "' + tag1 + '"} \
 tag.brand "' + brand2 + '" {interaction.content contains_any "' + brand2 + '" OR interaction.hashtags contains "' + tag2 + '"} \
 \
